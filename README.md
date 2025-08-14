@@ -22,3 +22,9 @@ optic:
   # if true, ssl cert verification is disabled
   disable_ssl_verification: false
 ```
+
+## todo
+
+- central req function in optic to do ssl+base_url stuff
+- query files to dl via storm
+- upload file

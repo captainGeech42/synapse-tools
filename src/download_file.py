@@ -23,16 +23,16 @@ def parse_args() -> argparse.Namespace:
     
     return args
 
-def process_hash(c: optic.Client, h: str):
+def process_hash(c: optic.Client, h: str) -> bool:
     try:
         d = c.axon_files_by_sha256(h)
     except:
         logging.exception("failed to download %s", h)
+        return False
 
     with open(h, "wb") as f:
         f.write(d)
-    
-    LOG.info("downloaded %s", h)
+    return True
 
 def main() -> int:
     args = parse_args()
@@ -40,11 +40,16 @@ def main() -> int:
 
     client = optic.Client()
 
-    if len(args.hashes) > 1:
+    if (l := len(args.hashes)) > 1:
+        success = 0
         for h in tqdm.tqdm(args.hashes):
-            process_hash(client, h)
+            if process_hash(client, h):
+                success += 1
+        LOG.info("successfully downloaded %d/%d files", success, l)
     else:
-        process_hash(client, args.hashes[0])
+        h = args.hashes[0]
+        if process_hash(client, h):
+            LOG.info("successfully downloaded %s", h)
 
     return 0
 
