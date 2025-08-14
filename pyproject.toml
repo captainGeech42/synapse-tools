@@ -1,0 +1,10 @@
+[project]
+name = "synapse-tools"
+version = "0.1.0"
+description = "Collection of misc tools for working with Synapse"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = ["requests>=2.32.4"]
+
+[project.scripts]
+upload_sample = "upload_sample:main"
