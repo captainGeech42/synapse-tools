@@ -1,5 +1,7 @@
 import logging
+import json
 import pprint
+from typing import Any
 
 import requests
 
@@ -56,3 +58,19 @@ class Client:
         r = self._get(f"/api/v1/axon/files/by/sha256/{sha256}")
         r.raise_for_status()
         return r.content
+    
+    def cortex_storm(self, query: str, opts: dict[str, Any] | None = None) -> list[list[Any]]:
+        """/api/v1/storm request"""
+
+        j: dict[str, Any] = {
+            "query": query
+        }
+        if opts:
+            j["opts"] = opts
+
+        r = self._get("/api/v1/storm", stream=True, json=j)
+        ret = []
+        for chunk in r.iter_content(chunk_size=None, decode_unicode=True):
+            msg = json.loads(chunk)
+            ret.append(msg)
+        return ret
