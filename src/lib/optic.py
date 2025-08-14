@@ -49,8 +49,15 @@ class Client:
     def _head(self, path: str, *args, **kwargs) -> requests.Response:
         return self._session.head(self._base_url+path, *args, verify=(not self._danger_ssl), **kwargs)
     
-    def axon_files_put():
-        pass
+    def axon_files_put(self, content: bytes) -> dict[str, str | int]:
+        """/api/v1/axon/files/put request"""
+
+        r = self._post("/api/v1/axon/files/put", data=content)
+        r.raise_for_status()
+        j = r.json()
+        if j.get("status") != "ok":
+            raise RuntimeError(f"failed to upload file: {j}")
+        return j["result"]
 
     def axon_files_by_sha256(self, sha256: str) -> bytes:
         """/api/v1/axon/files/by/sha256/<SHA-256> request"""
