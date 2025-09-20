@@ -17,7 +17,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("-v", "--view", help="view to execute Storm query in")
 
     mg1 = parser.add_mutually_exclusive_group(required=True)
-    mg1.add_argument("hashes", nargs="*", help="SHA256 hashes to download")
+    mg1.add_argument("hashes", nargs="+", help="SHA256 hashes to download")
     mg1.add_argument("-q", "--query", help="Storm query to execute - returned file:bytes nodes with :sha256 set will be downloaded")
 
     args = parser.parse_args()

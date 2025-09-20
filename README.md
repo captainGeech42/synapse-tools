@@ -22,7 +22,3 @@ optic:
   # if true, ssl cert verification is disabled
   disable_ssl_verification: false
 ```
-
-## todo
-
-- upload file

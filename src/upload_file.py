@@ -17,7 +17,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("-d", "--debug", action="store_true", help="enable debug logging")
     parser.add_argument("-v", "--view", help="view to model files in")
     parser.add_argument("-m", "--model", action="store_true", help="model uploaded files in the Cortex")
-    parser.add_argument("files", nargs="*", help="paths to file(s) to upload. if -m/--model is set, the basename of the file will be written to the Cortex.")
+    parser.add_argument("files", nargs="+", help="paths to file(s) to upload. if -m/--model is set, the basename of the file will be written to the Cortex.")
     
     args = parser.parse_args()
     if args.view and len(args.view) != 32:
